@@ -1,0 +1,488 @@
+%This file discusses how to create and randomize a regular short- or long-answer question.
+
+%The second file "m - question creation" assumes knowledge from this file, and contains only information related to multiple choice questions.
+
+%%%%%%%%%%
+
+%%%%% Index
+
+% 0.0 - General setup
+
+% 1.0 - Question formatting
+%% 1.1 - Pre- and post- content
+%% 1.2 - Writing questions and answers
+%% 1.3 - Randomizing multiple varieties (and varieties with multiple parts)
+
+% 2.0 - Randomization basics
+%% 2.1 - Randomizing integers 
+%% 2.2 - Randomizing from a set
+%% 2.3 - Including arithmetic and variables in definitions
+%% 2.4 - Randomizing and printing decimals
+%% 2.5 - Dealing with floats and rounding
+
+% 3.0 - More complicated randomization
+%% 3.1 - Creating random numbers that must be different 
+%% 3.2 - Selecting a set of values simultaneously
+%% 3.3 - If/then commands
+%% 3.4 - From a list of numbers with a specific value removed
+
+% 4.0 - "Simplify" commands
+%% 4.1 - Fractions
+%% 4.2 - Square roots
+%%% 4.2.1 - Dealing with square roots
+%% 4.3 - Polynomials
+%%% 4.3.1 - Advanced polynomial techniques
+%% 4.4 - Numbers with commas
+
+
+
+%%%%%%%%%%
+
+%0.0 - General setup
+
+The randomizer works by identifying text strings as bookends to definitions of questions, variables, solutions, and so forth. Anything written outside of these bookends is "safe" in the sense that it will never be found by the randomizer, such as this text.
+
+This file is constructed so that it is able to run through the randomizer. Each section will create a question variant using the tools discussed. As such, bookend strings are introduced only in the variant, as other uses would break the file.
+
+Question types are distinguished by file names. Anything starting with "q" must be short- or long-answer. Anything starting with "m" must be multiple choice. Suffixes "pre" and "post" are reserved for a long-answer question with multiple parts is split up over multiple files (the only place that this becomes relevant is in creating a grading guide file, as this may cause errors); pre for content before the questions and post for content after.
+
+
+
+%%%%%%%%%%
+
+%1.0 - Question formatting
+
+%%1.1 - Pre- and post- content
+
+For ease of use, content that has to be included before and after every question variation can be included separately with the pre and post bookends. When the randomizer chooses a question and begins its processes, it will automatically throw the pre content in before and the post content after. Note that this is only included in the assessment file and not in the associated solution file.
+
+The randomizer will only look for one copy of each, so it cannot be used repeatedly.
+
+This is a convenient way to write scores only once or make changes to spacing, both of which are which are convenient for editing. 
+
+startpre
+\item {\bf (12 points)} 
+endpre
+
+startpost
+\vfill 
+endpost
+
+
+
+
+
+%%1.2 - Writing questions and answers
+
+Each question variety must contain its own question and answer, and so these must be included in a larger grouping. These are the "all" bookends. The main block of python code automatically starts and ends the main enumeration LaTeX calls, so here everything must include an \item tag. No special consideration must be given to questions that are first or last in the exam. Since we have included the \item tag in the ''pre'' tag earlier in this case they are not needed  for the questions here, but are still needed with solutions since they do not receive the pre and post content.
+
+Each "all" bookend must contain a "question" bookend pair and a  "solution" bookend pair. A "comments" bookend pair is optional, and can be used to distinguish how the question varieties actually differ from one another. These show up when creating a grading guide.
+
+Content within the "question" bookends is sent to the exam file, content within the "solution" bookends is sent to the solutions file.
+
+startall
+startcomments
+Used to describe variations. Does not appear on exams, only in grading guides.
+endcomments
+
+startquestion General question content.
+endquestion
+
+startsolution
+\item Solution content.
+endsolution
+endall
+
+
+
+%%1.3 - Writing multiple varieties (and varieties with multiple parts)
+
+The randomizer randomly chooses one variety from the full list of content with the "all" bookends. Content in the "all" but outside of the other bookends is not used, but may potentially be seen by python, and therefore should be avoided (though it should never be treated as anything other than a text string).
+
+Anything properly created with LaTeX should work as desired. Create varieties with multiple parts using enumeration.
+
+Note that spacing may be designated between each part. Remember that any space created by the "post'' content will be included after the question content, and may throw off space for the last part.
+
+startall
+startcomments 
+Question with multiple parts.
+endcomments
+
+startquestion Any preamble. \begin{enumerate}
+\item A first part. \vspace{2cm}
+\item A second part.
+\end{enumerate}
+endquestion
+
+startsolution
+\item \begin{enumerate}
+\item First solution.
+\item Second solution.
+\end{enumerate}
+endsolution
+endall
+
+
+
+%%%%%%%%%%
+
+%2.0 - Randomization basics
+
+The basic bookends for defining variables is "def". For example, the following string would create a variable 'a' with value 7.
+
+startdef a = 7 enddef
+
+It's important to understand how the randomization works to understand how to use it effectively. Everything to the left of the equals sign is treated as a text string (spaces are removed) and defines the variable. Everything to the right of the equals sign is evaluated by python, and a value is returned. In both the exam and solution files, a definition is created where the variable is assigned the value.
+
+All variable assignments are done first, prior to choosing a question variety. If you look at the LaTeX output after running this file, before each question will be all the variable definitions. This occurs regardless of if the definition is used in the question.
+
+Key to this working is the fact that if a definition is created twice in LaTeX, the most recent is used. This means that in a single question file is it important to not reuse variable names, as they will overwrite each other. In different question files this does not cause any problems.
+
+Further, LaTeX does not allow numbers in definitions. Variable names must be only letters. 
+(\x4 <- see)
+
+Writing in LaTeX, the string \a calls the value that was assigned to "a" in Python.
+
+startall
+startquestion $a = \a$ endquestion
+
+startsolution \item  endsolution
+endall
+
+
+
+%%2.1 - Randomizing integers 
+
+To randomize from a string of consecutive integers, use the following.
+
+startdef atwoone = np.random.randint(1,4) enddef
+
+The way that python handles integers, this is a random number from the list {1,2,3}. Note that the first value is included, the last is not. 
+
+Be careful; if the largest value is less than or equal to the smallest, then an error will occur in python.
+
+startall
+startquestion  I successfully chose then number $\atwoone$ at random. endquestion
+startsolution \item  endsolution
+endall
+
+
+
+%%2.2 - Randomizing from a set
+
+To randomize from a list of options, use the following.
+
+startdef atwotwo = random.choice([-6,3,-2,5]) enddef
+
+Any of these values can be chosen with equal probability. This is a great way to fix certain issues that may occur with random values in an interval, like cancellation. Lists of prime number or numbers of a specific parity can be used effectively.
+
+startall
+startquestion I successfully chose then number $\atwotwo$ at random. endquestion
+startsolution \item  endsolution
+endall
+
+
+
+%%2.3 - Including arithmetic and variables in definitions
+
+When defining variables, the python code assigns the value created to its own variable, with the same variable name. As a result, definitions can contain mathematical operations, as well as other variables so long as they are included in the question file in logical order.
+
+startdef atwothree = np.random.randint(1,6) enddef
+startdef btwothree = np.random.randint(6,10) enddef
+
+startdef sumtwothree = atwothree + btwothree enddef
+startdef diftwothree = atwothree - btwothree enddef
+startdef bigtwothree = atwothree*100 enddef
+
+Note the special notation python uses for exponents; a**b in python is the same as a^b everywhere else.
+startdef powtwothree = btwothree**atwothree enddef 
+
+Python uses the format math.log(value,base) = log_base(value).
+startdef logtwothree = math.log(atwothree,btwothree) enddef
+
+Multiple randomization calls can be included in the same definition.
+startdef factortwothree = random.choice([2,3,5,7,11])*random.choice([13,17,19]) enddef
+
+startall
+startquestion \begin{enumerate}
+\item $\atwothree + \btwothree = \sumtwothree$
+\item $\atwothree - \btwothree = \diftwothree$
+\item $\btwothree^{\atwothree} = \powtwothree$
+\item $\atwothree \times 100 = \bigtwothree$
+\item $\log_{\btwothree}(\atwothree) = \logtwothree$
+\item $\factortwothree$ can be factored into two primes.
+\end{enumerate} endquestion
+startsolution \item  endsolution
+endall
+
+Conceptually, any mathematical operation that python is able to perform can be included here.
+
+It is a good idea to always use curly braces around subscripts and exponents. If the defined value is one character long and you don't it doesn't cause problems, but if the length is more than one character only the first will be raised or lowered, the same as the LaTeX error for 2^13.
+
+
+
+%%2.4 - Randomizing and printing decimals
+
+There are obviously multiple ways to create and display decimals.
+
+The following variables would then have two and three decimal places, respectively. In each case, values will be between one and two.
+
+Divide creatively;
+startdef atwofour = float(decimal.Decimal(np.random.randint(101, 200))/100) enddef
+Randomize a float value and round to the desired number of decimal places;
+startdef btwofour = round(random.uniform(1.001,2.0),3) enddef
+
+startall
+startquestion $\atwofour$, $\btwofour$ endquestion
+startsolution \item  endsolution
+endall
+
+Because of how python handles float values, trailing zeros are NOT printed. That is, if a variable 2.10 is created, it will appear as 2.1 without proper formatting commands. In cases where a specific number of decimal places are required, like a problem involving money, use the format command.
+
+startdef tooshorttwofour = 10.1 enddef
+startdef moneytwofour = '{:.2f}'.format(tooshorttwofour) enddef
+startdef longertwofour = '{:.5f}'.format(tooshorttwofour) enddef
+
+startall
+startquestion Two decimal places: $\moneytwofour$. Five: $\longertwofour$. endquestion
+startsolution \item  endsolution
+endall
+
+
+
+%%2.5 - Dealing with floats and rounding
+
+Python evaluation isn't perfect, and tends to fall of by the tenth decimal place. This is an issue with float values. Avoid using float values in intermediate steps whenever possible.
+
+Use the round command to round to a specific number of decimal places.
+
+startdef atwofive = round(0.123456,2) enddef
+startdef btwofive = round(0.123456,5) enddef
+
+startall
+startquestion $\atwofive < \btwofive$ endquestion
+startsolution \item  endsolution
+endall
+
+
+
+%%%%%%%%%%
+
+%3.0 - More complicated randomization
+
+%%3.1 - Creating random numbers that must be different 
+
+You can use arithmetic to guarantee that two numbers will not be equal by randomizing the difference.
+
+startdef athreeone = random.choice([4,5,6]) enddef
+startdef bthreeone = athreeone + random.choice([-2,-1,1,2]) enddef
+
+startall
+startquestion $\athreeone \neq \bthreeone$ endquestion
+startsolution \item  endsolution
+endall
+
+Other methods for doing this are included in Sections 3.2 and 3.4.
+
+
+
+%%3.2 - Selecting a set of values simultaneously
+
+If you need to create a number of variables that interact in specific ways, one option is to select random sets. The setup for doing so is as follows.
+
+startdef setthreetwo = np.random.choice(['[2, 5, 6]','[3, 7, 7]','[12, 6, 9]']) enddef 
+
+An example that this has been useful for is quadratics that require the quadratic formula to factor, but can't be simplified (for consistent grading).
+
+This creates a variable, setthreetwo, that is one of [2,5,6], [3,7,7], or [12,6,9]. Correct formatting is necessary here. Then, define variables to be the values of the python list. Note that python lists always start at position 0.
+
+startdef athreetwo = setthreetwo[0] enddef
+startdef bthreetwo = setthreetwo[1] enddef
+startdef cthreetwo = setthreetwo[2] enddef
+
+startall
+startquestion $\setthreetwo$ contains $\athreetwo,\bthreetwo$, and $\cthreetwo$. endquestion
+startsolution \item  endsolution
+endall
+
+
+
+%%3.3 - If/then commands
+
+LaTeX can use numeric if/then commands. This can be particularly useful in creating question files that require fewer varieties. 
+
+Correct usage can be tricky, so be sure to test any questions using these carefully.
+
+This can be particularly useful for displaying tricky functions correctly, or randomizing alternate functions.
+
+startdef controlthreethree = random.choice([-8,-5,-4,4,5,8]) enddef enddef
+startdef athreethree = random.choice([1,2,3,4]) enddef
+startdef topthreethree = random.choice([0,1]) enddef
+
+startall
+startquestion \begin{enumerate}
+\item If I add $\controlthreethree$ to $y=x^2$, the graph shifts \ifthenelse{\controlthreethree >0}{up}{down}.
+\item $y = \ifthenelse{\athreethree = 1}{4^x}{\athreethree(4^x)}$
+\item $y = \ifthenelse{\topthreethree = 1}{x}{\frac{1}{x}}$
+\end{enumerate}
+endquestion
+
+startsolution \item  endsolution
+endall
+
+Note that "then" and "elses" can be left empty if you want nothing printed.
+
+
+
+%%3.4 - From a list of numbers with a specific value removed
+
+A separate python function had to be created to remove values from potential sets. (There were issues with using the ones already in existence due to how variables exists in pythons memory. This is a known issue with python, unlikely to be fixed anytime soon.)
+
+Two workaround uses the command call set_remove. A set is created from items in the first, after removing items in the second. Note that items in the second that are not in the first do not cause errors.
+
+This creates another way of choosing two different, non-equal values.
+
+startdef athreefour = random.choice([3,4,5]) enddef
+startdef bthreefour = random.choice(set_remove([1,2,3,4,5,6],[athreefour,6,7,8])) enddef
+startdef listthreefour = set_remove([1,2,3,4,5],[athreefour]) enddef
+
+startall
+startquestion $\athreefour, \bthreefour, \listthreefour$ endquestion
+startsolution \item  endsolution
+endall
+
+Inputs can be lists [], sets {}, or tuples (). Further, using Python language, range(1,4) = {1,2,3} can be a useful shorthand.
+
+
+
+%%%%%%%%%%
+
+%4.0 - "Simplify" commands
+
+A number of specific Python functions were created to deal with specific Python issues. In some cases, the output is something that Python is incapable of understanding and causes crashes. To deal with these, the string "simplify" is used. If a function begins with this character string, Python will not attempt to understand the evaluation of that definition. This means that you cannot perform any additional operations in Python with any variables defined with a simplify command.
+
+Usually, this means commands where the output is LaTeX code, which is unreadable to Python.
+
+
+
+%%4.1 - Fractions
+
+Simplify_fraction is used to write fractions in simplest form. It works correctly if the denominator is 1. 
+
+The input for this command is simplify_fraction(numerator,denominator)
+
+In the case of negative fractions, the numerator is written as a negative number. 
+
+Note that the output is a \frac command. Use \displaystyle to have it display in larger size.
+
+startdef afourone = random.choice([4,8,12,16]) enddef
+startdef bfourone = random.choice([-2,4,-6,-8]) enddef
+
+startdef fracfourone = simplify_fraction(afourone,bfourone) enddef
+
+startall
+startquestion $\dfrac{\afourone}{\bfourone} = \fracfourone$ or $\displaystyle \fracfourone$ 
+endquestion
+startsolution \item  endsolution
+endall
+
+
+
+%%4.2 - Square roots
+
+Simplify_sqrt can be used to write simplified square roots. This input is what goes inside the square root.
+
+Note that there are obvious workarounds in variable creation to using this particular code, but it is nice and simple to use.
+
+It does NOT work with negative inputs. See Section 4.2.1 for an alternate workaround.
+
+startdef rootfourtwo = random.choice([8,12,20]) enddef
+startdef simplifiedfourtwo = simplify_sqrt(rootfourtwo) enddef
+
+startall
+startquestion  $\sqrt{\rootfourtwo} = \simplifiedfourtwo$ endquestion
+startsolution \item  endsolution
+endall
+
+
+%%%4.2.1 - Dealing with square roots
+
+In case the values of a simplified root are needed for further manipulation, the command sqrt_output can be used. Here, an input x returns a list [a,b] where \sqrt{x} = a\sqrt{b}. Like randomizing a set of lists, define variables to grab these outputs.
+
+startdef sqrtlistfourtwo = sqrt_output(rootfourtwo) enddef
+startdef outfourtwo = sqrtlistfourtwo[0] enddef
+startdef infourtwo = sqrtlistfourtwo[1] enddef
+
+startdef wowfourtwo = simplify_fraction(outfourtwo,2) enddef
+
+startall
+startquestion $\dfrac{1+\sqrt{\rootfourtwo}}{2} = \dfrac{1}{2} + \ifthenelse{\wowfourtwo = 1}{}{\wowfourtwo} \sqrt{\infourtwo}$
+endquestion
+startsolution \item endsolution
+endall
+
+
+
+%%4.3 - Polynomials
+
+Simplify_polynomial correctly writes polynomials, given a variable and sequence of numeric coefficients. The list of coefficients must be given based on degree of terms. 
+
+Note that variables can be complicated, but, for example, xyz would have larger exponents display incorrectly; xyz^3 instead of (xyz)^3. Use (xyz) instead.
+
+startdef afourthree = random.choice([-5,0,5]) enddef
+startdef nicethreefour = simplify_polynomial('x',[3,-1,afourthree]) enddef
+startdef nastythreefour = simplify_polynomial('xyz',[1,0,0,afourthree]) enddef
+
+startall
+startquestion  $\nicethreefour = \nastythreefour$ endquestion
+startsolution \item  endsolution
+endall
+
+
+
+%%%4.3.1 - Advanced polynomial techniques
+
+(Credit to Avantha Kodithuwakku turning a bug into a feature.)
+
+An issue with simplify_polynomial is that, if the leading coefficient is zero, the new first time will have a sign displayed. For example, simplify_polynomial('x',[0,1,1]) returns +x+1. This is actually incredibly useful when writing more complicated functions, such as multivariate functions or functions written in non-standard ways.
+
+For example, writing ax+by where b might be negative can be done easily this way.
+
+startdef cfourthree = random.choice([-4,4]) enddef
+startdef dfourthree = random.choice([-10,-9,9,10]) enddef
+
+startdef infourthree = simplify_polynomial('x',[cfourthree,0]) enddef
+startdef outfourthree = simplify_polynomial('y',[0,dfourthree,0]) enddef
+
+startall
+startquestion  $\infourthree \outfourthree$ endquestion
+startsolution \item  endsolution
+endall
+
+Note that no sign needs to be written before \outfourthree, as a result of this construction.
+
+
+
+%%4.4 - Numbers with commas
+
+This call can be used to write numbers with comma separators, for ease of use.
+
+startdef afourfour = np.random.randint(1000000,2000000) enddef
+startdef nicefourfour = simplify_commanumber(afourfour) enddef
+
+Note that LaTeX treats commas in math mode like proper commas, so the display is weird if used in math mode. Outside of math mode, you must manually insert a space after the number (if so desired) to have it work correctly in a sentence. 
+
+startall
+startquestion $\afourfour$ is awkward to read; \nicefourfour is missing a space, \nicefourfour\ is nice, $\nicefourfour$ adds spacing that makes it confusing to read. endquestion
+startsolution \item  endsolution
+endall
+
+This does not work correctly with decimal floats currently, in that trailing zeros will be lost. The decimals themselves work correctly.
+
+startdef goodfourfour = simplify_commanumber(1000000.12345) enddef
+startdef badfourfour = simplify_commanumber(1000000.10000) enddef
+
+startall
+startquestion  \goodfourfour $\neq$ \badfourfour endquestion
+startsolution \item  endsolution
+endall

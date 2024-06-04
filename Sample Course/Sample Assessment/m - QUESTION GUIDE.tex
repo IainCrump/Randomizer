@@ -1,0 +1,89 @@
+This file discusses how to create multiple choice questions. In general, any type of randomization that can be done for long-answer questions can be done for multiple choice, and as such will not be discussed here.
+
+Again, to create a multiple choice question, the file name must start with the letter 'm'.
+
+
+As there are fewer things that can be done with multiple choice, the layout here will be less organized.
+
+
+
+startpre
+\item {\bf (2 points)} 
+endpre
+
+startpost
+endpost
+
+
+
+Key to multiple choice is the "solset" bookends. Three variables exist inside;
+-  "column" bookends control how many columns the possible answers are split into
+-  "width" bookends controls the textwidth fraction of the page the answers occupy
+-  "sola -- solb bookends are the answers.
+
+The first listed answer is what is selected as the correct answer for the solution file.
+
+Any number of answers can be presented.
+
+
+startall
+startquestion Which of these is correct?
+endquestion
+
+startsolset
+begincolumn 3 endcolumn
+beginwidth 1.0 endwidth
+
+sola Correct. solb
+sola Wrong. solb
+sola Wrong. solb
+endsolset
+endall
+
+
+
+
+startall
+startquestion Which of these is correct?
+endquestion
+
+startsolset
+begincolumn 4 endcolumn
+beginwidth 1.0 endwidth
+
+sola Correct. solb
+sola Wrong. solb
+sola Wrong. solb
+sola Wrong. solb
+sola Wrong. solb
+sola Wrong. solb
+sola Wrong. solb
+sola Wrong. solb
+sola Wrong. solb
+sola Wrong. solb
+endsolset
+endall
+
+
+
+If a solution bookend contains the phrase "always_first", it will always be the first listed answer. Similarly, if it contains the string "always_last", it will always be the last listed answer.
+
+These can be omitted, as with the previous problem, or used individually or together
+
+Placement within the bookends is unimportant. The string is found and removed, so it can be placed in the middle of a word without affecting the appearance of the answer.
+
+startall
+startquestion Which of these isn't mentally problematic?
+endquestion
+
+startsolset
+begincolumn 1 endcolumn
+beginwidth 1.0 endwidth
+
+sola None of the below. always_first solb
+sola $a \neq a$ solb
+sola I've built a set that contains itself. solb
+sola always_last All of the above. solb
+endsolset
+endall
+

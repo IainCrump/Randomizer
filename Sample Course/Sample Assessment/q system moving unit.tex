@@ -1,0 +1,76 @@
+%%%%Randomize
+
+startdef xis = random.choice([-1,1])*np.random.randint(1,6) enddef
+startdef yis = np.random.randint(-5,6) enddef
+
+%Part a - coefficient variables - note the construction forces the polys aren't equivalent
+startdef nomatcho = random.choice(['[2,3,3,5]', '[2,5,3,2]', '[2,3,5,2]', '[2,5,5,3]', '[3,2,2,5]', '[3,5,2,3]', '[5,3,2,5]', '[5,2,2,3]']) enddef
+startdef a = random.choice([-1,1])*nomatcho[0] enddef
+startdef c = random.choice([-1,1])*nomatcho[1] enddef
+startdef b = random.choice([-1,1])*nomatcho[2] enddef
+startdef d = random.choice([-1,1])*nomatcho[3] enddef
+%Part a - solution
+startdef polyonesol = a*xis + b*yis enddef
+startdef polytwosol = c*xis + d*yis enddef
+%Part a - normal polynomial representation
+startdef xgoodone = simplify_polynomial('x',[a,0]) enddef
+startdef ygoodone = simplify_polynomial('y',[0,b,0]) enddef
+startdef xgoodtwo = simplify_polynomial('x',[c,0]) enddef
+startdef ygoodtwo = simplify_polynomial('y',[0,d,0]) enddef
+
+
+%Part b - coefficient variables - again forcing non-equivalent polys
+startdef unitize = random.choice(['[1,0,0,0,1,0]','[0,1,0,0,1,0]','[0,0,1,0,0,1]','[0,0,0,1,0,1]']) enddef
+startdef mtem = random.choice([-1,1])*random.choice([2,3]) enddef
+startdef ntem = random.choice([-1,1])*random.choice([4,5])enddef
+startdef ptem = random.choice([-1,1])*random.choice([4,5]) enddef
+startdef qtem = random.choice([-1,1])*random.choice([3,5]) enddef
+startdef m = mtem - unitize[0]*(mtem-1) enddef
+startdef n = ntem - unitize[1]*(ntem-1) enddef
+startdef p = ptem - unitize[2]*(ptem-1) enddef
+startdef q = qtem - unitize[3]*(qtem-1) enddef
+%Part b - solution
+startdef polytonesol = m*xis + n*yis enddef
+startdef polyttwosol = p*xis + q*yis enddef
+%Part b - normal polynomial representation
+startdef xtgoodone = simplify_polynomial('x',[m,0]) enddef
+startdef ytgoodone = simplify_polynomial('y',[0,n,0]) enddef
+startdef xtgoodtwo = simplify_polynomial('x',[p,0]) enddef
+startdef ytgoodtwo = simplify_polynomial('y',[0,q,0]) enddef
+
+
+
+%%%%
+
+
+%%%% Pre- and post- content
+startpre
+\item {\bf (6 points)} 
+endpre
+
+startpost
+ \vfill \vfill
+endpost
+%%%%
+
+
+%%%%Questions
+startall
+startquestion Solve the system using either substitution or elimination. Write your answer as an ordered pair, if possible. 
+
+$ \begin{cases} \xtgoodone \ytgoodone = \polytonesol \\
+\xtgoodtwo \ytgoodtwo = \polyttwosol
+\end{cases}$
+endquestion 
+
+startsolution
+\item $ \begin{cases} \xtgoodone \ytgoodone = \polytonesol \\
+\xtgoodtwo \ytgoodtwo = \polyttwosol
+\end{cases}$; solution $(\xis, \yis)$
+endsolution
+endall
+
+
+
+
+%%%%

@@ -1,0 +1,37 @@
+startdef a = np.random.randint(2,7) enddef
+startdef athree = a*3 enddef
+startdef b = np.random.randint(-9,-2) enddef
+startdef btwo = b*2 enddef
+startdef c = np.random.randint(-12,-1) enddef
+startdef d = np.random.randint(5,12) enddef
+
+startdef poly = simplify_polynomial('x',[a,b,c,d]) enddef
+startdef polydif = simplify_polynomial('x',[athree,btwo,c]) enddef
+
+
+startpre
+\item {\bf (4 points)} 
+endpre
+
+startpost
+\vfill 
+endpost
+
+
+
+startall
+startcomments 
+Polynomial derivative
+endcomments
+
+startquestion What is the derivative of $\poly$?
+endquestion
+
+startsolution
+\item $\polydif$
+endsolution
+endall
+
+
+
+

@@ -1,0 +1,80 @@
+startdef varexp = random.choice([2,3,4]) enddef
+startdef newexp = varexp-1 enddef
+startdef trigcoeff = random.choice([-4,-3,-2,2,3,4]) enddef
+
+startdef trigval = simplify_polynomial('x',[0,trigcoeff]) enddef
+startdef oppval = simplify_polynomial('x',[0,-1*trigcoeff]) enddef
+
+
+startpre
+\item {\bf (4 points)} 
+endpre
+
+startpost
+\vfill 
+endpost
+
+
+
+startall
+startcomments 
+Exponential derivatives
+endcomments
+
+startquestion Compute $\frac{dy}{dx}$ for $y=x^{x^\varexp \trigval \sin(x)}$.
+endquestion
+
+startsolution
+\item $(x^{x^\varexp \trigval \sin(x)}) \left( (\varexp x^{\newexp} \trigval \cos(x))\ln(x) + \frac{x^\varexp \trigval \sin(x)}{x} \right)$
+endsolution
+endall
+
+
+
+
+startall
+startcomments 
+Learning goal 10
+endcomments
+
+startquestion Compute $\frac{dy}{dx}$ for $y=x^{x^\varexp \trigval \cos(x)}$.
+endquestion
+
+startsolution
+\item $(x^{x^\varexp \trigval \cos(x)}) \left( (\varexp x^{\newexp} \oppval \sin(x))\ln(x) + \frac{x^\varexp \trigval \cos(x)}{x} \right)$
+endsolution
+endall
+
+
+
+
+startall
+startcomments 
+Learning goal 10
+endcomments
+
+startquestion Compute $\frac{dy}{dx}$ for $y=x^{e^{\varexp x} \trigval \sin(x)}$.
+endquestion
+
+startsolution
+\item $(x^{e^{\varexp x} \trigval \sin(x)}) \left( (\varexp e^{\varexp x} \trigval \cos(x))\ln(x) + \frac{e^{\varexp x} \trigval \sin(x)}{x} \right)$
+endsolution
+endall
+
+
+
+startall
+startcomments 
+Learning goal 10
+endcomments
+
+startquestion Compute $\frac{dy}{dx}$ for $y=x^{e^{\varexp x} \trigval \cos(x)}$.
+endquestion
+
+startsolution
+\item $(x^{e^{\varexp x} \trigval \cos(x)}) \left( (\varexp e^{\varexp x} \oppval \sin(x))\ln(x) + \frac{e^{\varexp x} \trigval \cos(x)}{x} \right)$
+endsolution
+endall
+
+
+

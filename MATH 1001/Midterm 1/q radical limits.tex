@@ -1,0 +1,45 @@
+startdef a = random.choice([1,2,3,4,5]) enddef
+startdef b = random.choice([2,3,4,5]) enddef
+startdef ab = a*b enddef
+startdef c = random.choice([ab-3, ab-2, ab-1, ab+1, ab+2, ab+3]) enddef
+
+startdef amb = a-b enddef
+startdef ansroot = a*a+c enddef
+
+startdef firstroot = simplify_polynomial('x',[1,0,c]) enddef
+startdef secondroot = simplify_polynomial('x',[a+b,-ab+c]) enddef
+
+startdef porm = random.choice([-1,1]) enddef %randomly choose +/- between the roots
+
+
+startpre
+\item {\bf (4 points)} 
+endpre
+
+startpost
+\vfill 
+endpost
+
+
+
+startall
+startcomments 
+Limits with radicals
+endcomments
+
+startquestion Consider the limit $\displaystyle \lim_{x \rightarrow \a} \frac{\sqrt{\firstroot} - \sqrt{\secondroot}}{x-\a}$. \begin{enumerate}
+\item What is the conjugate of the numerator? \vspace{3cm}
+\item Evaluate the limit.
+\end{enumerate}
+endquestion
+
+startsolution
+\item \begin{enumerate}
+\item $\sqrt{\firstroot} + \sqrt{\secondroot}$
+\item $\frac{\amb}{2\sqrt{\ansroot}}$
+\end{enumerate}
+endsolution
+endall
+
+
+

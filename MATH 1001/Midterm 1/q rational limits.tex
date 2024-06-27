@@ -1,0 +1,53 @@
+startdef a = random.choice([0,1,2,3,4,5]) enddef %limit value
+startdef b = random.choice(set_remove([-4,-3,-2,-1,0,1,2,3,4],[a,-a])) enddef 
+startdef k = random.choice(set_remove([2,3,4,5,6],[a,b])) enddef
+
+startdef fancyp = simplify_polynomial('x',[1,-a-b,a*b]) enddef
+startdef simplep = simplify_polynomial('x',[k,-k*a]) enddef
+
+startdef fancyreduced = a-b enddef
+startdef niceanstop = simplify_fraction(fancyreduced,k) enddef
+startdef niceansbottom = simplify_fraction(k,fancyreduced) enddef
+
+startpre \item {\bf (4 points)} endpre
+
+startpost
+\vfill 
+endpost
+
+
+
+startall
+startcomments 
+Limits of unsimplified rational function
+endcomments
+
+startquestion Evaluate the following limit. 
+
+$\displaystyle \lim_{x\rightarrow \a} \frac{\fancyp}{\simplep}$
+endquestion
+
+startsolution
+\item $\frac{\fancyreduced}{\k} = \niceanstop$
+endsolution
+endall
+
+
+
+startall
+startcomments 
+Learning goal 12
+endcomments
+
+startquestion Evaluate the following limit. 
+
+$\displaystyle \lim_{x\rightarrow \a} \frac{\simplep}{\fancyp}$
+endquestion
+
+startsolution
+\item $\frac{\k}{\fancyreduced} = \niceansbottom$
+endsolution
+endall
+
+
+

@@ -1,0 +1,53 @@
+%%%%Randomize
+startdef discount =np.random.randint(12,19) enddef 
+startdef paid = '{:.2f}'.format(round(random.uniform(1008.01, 1999.9),2)) enddef
+startdef rainy = '{:.2f}'.format(round(random.uniform(8.50,15.21),2)) enddef
+
+startdef orcost = '{:.2f}'.format(round(paid/(1-discount/100),2)) enddef
+startdef purcost = '{:.2f}'.format(round(paid/(1+discount/100),2)) enddef
+startdef orrainy = '{:.2f}'.format(round(rainy/(1-discount/100),2)) enddef
+%%%%
+
+
+%%%% Pre- and post- content
+startpre \item {\bf (5 points)} endpre
+
+startpost
+\vfill 
+endpost
+%%%%
+
+
+%%%%Questions
+startall
+startquestion Elridge Furniture discounts furniture \discount\% to customers paying cash. Jennifer paid \$\paid\ cash for a roll-top desk. What was the original price of the desk? (Round to the nearest cent.) Set up an algebraic equation to represent the situation and solve. Show units.
+endquestion 
+
+% Regular problem solution
+startsolution
+\item Paid \$\paid\ for a desk that was \discount\% off. Original cost was \$\orcost. 
+endsolution
+endall
+
+
+startall
+startquestion A roll-top desk in Elridge Furniture has been marked up \discount\% and is being sold for \$\paid. How much did Elridge Furniture pay the distributer for the desk? (Round to the nearest cent.) Set up an algebraic equation to represent the situation and solve. Show units.
+endquestion 
+
+% Regular problem solution
+startsolution
+\item Desk marked up \discount\% to \$\paid. Was originally \$\purcost. 
+endsolution
+endall
+
+
+startall
+startquestion In April of this year, Greenfield received \rainy\ inches of rain. This was \discount\% less than the amount recorded in April of 2010. How much rain did Greenfield  receive in April 2010? Set up an algebraic equation to represent the situation and solve. Show units.
+endquestion 
+
+% Regular problem solution
+startsolution
+\item Received \rainy\ inches of rain, \discount\% less rain than normal. Normal is \orrainy\ inches.
+endsolution
+endall
+%%%%

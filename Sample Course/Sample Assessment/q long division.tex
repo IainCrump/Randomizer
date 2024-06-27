@@ -1,0 +1,37 @@
+%%%%Randomize
+startdef a = np.random.choice([4,5,6,7]) enddef
+startdef b = np.random.choice([2,3,4]) enddef
+startdef c = np.random.choice(set_remove([-8,-7,-6,-5,-4,-3],[-a*b])) enddef
+startdef r = np.random.choice(set_remove([8,9,10,11,12,13,14],[-a*c])) enddef
+
+startdef monicpol = simplify_polynomial('x',[1,a]) enddef
+startdef longnbad = simplify_polynomial('x',[b,(a*b+c),(a*c+r)]) enddef
+startdef anspol = simplify_polynomial('x',[b,c]) enddef
+%%%%
+
+
+%%%% Pre- and post- content
+startpre \item {\bf (6 points)} endpre
+
+startpost
+\vfill  \vfill \vfill
+endpost
+%%%%
+
+
+%%%%Questions
+startall
+startquestion Divide the following using {\bf long division}. Your final answer should be in the form $$ \text{Quotient} + \dfrac{\text{Remainder}}{\text{Divisor}}.$$
+
+\vspace{3mm}
+
+$(\longnbad) \div (\monicpol)$
+endquestion 
+
+% Regular problem solution
+startsolution
+\item Question: $(\longnbad) \div (\monicpol)$   \\
+Solution: $\anspol + \dfrac{\r}{\monicpol}$
+endsolution
+endall
+

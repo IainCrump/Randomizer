@@ -1,0 +1,50 @@
+%%%%%%Randomize
+% Dimensions
+startdef x=np.random.randint(51,89) enddef
+startdef y=2*x enddef
+startdef L=4*x enddef
+startdef area=x*y enddef
+
+startpre \item {\bf (5 points)} endpre
+
+startpost  
+\vfill \vfill \vfill
+endpost
+
+
+
+startall 
+startquestion You have $\L$ feet of fencing to enclose a rectangular plot that borders on a river. If you do not fence along the side of the river, what is the largest area that can be enclosed? \\
+
+\begin{tikzpicture}[scale=0.2]
+    \draw[snake=coil,segment aspect=0,gray] (0,0)   -- (20,0);
+    \draw[black] (4,0) -- (4,-4) -- (16,-4) -- (16,0);
+    \draw[gray] (10,1.5) node {River};
+    \draw[black] (16,-4) node[anchor=west] {Fence};
+\end{tikzpicture}
+endquestion 
+
+startsolution 
+\item  Largest area: $\area$ ft$^2$
+endsolution 
+endall
+
+
+startall 
+startquestion You have $\L$ feet of fencing to enclose a rectangular plot that borders on a river. If you do not fence along the side of the river, find the \textbf{dimensions} of the plot that will maximize the area. \\
+
+\begin{tikzpicture}[scale=0.2]
+    \draw[snake=coil,segment aspect=0,gray] (0,0)   -- (20,0);
+    \draw[black] (4,0) -- (4,-4) -- (16,-4) -- (16,0);
+    \draw[gray] (10,1.5) node {River};
+    \draw[black] (16,-4) node[anchor=west] {Fence};
+\end{tikzpicture}
+endquestion 
+
+startsolution 
+\item  Dimensions: $\x$ ft by $\y$ ft
+endsolution 
+endall
+
+
+%%%%%%

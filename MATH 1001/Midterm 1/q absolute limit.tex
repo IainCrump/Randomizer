@@ -1,0 +1,113 @@
+startdef a = random.choice([1,2,3,4,5,6,7]) enddef
+startdef k = random.choice(set_remove([2,3,4,5,6],[a])) enddef
+
+startdef abstop = random.choice([0,1]) enddef %variable to determine if the absolute value is top or bottom
+startdef ktop = random.choice([0,1]) enddef %variable to determine if k is top or bottom
+
+
+
+startpre \item {\bf (4 points)} endpre
+
+startpost
+\vfill 
+endpost
+
+
+
+startall
+startcomments 
+Limits of piecewise functions
+endcomments
+
+startquestion Complete the piecewise function, and use that to evaluate the given limit.
+
+\vspace{.5cm}
+
+$|\a - t| = \begin{cases} \hspace{1cm} & \text{ when } t \geq \a \\ & \\ \hspace{1cm} & \text{ when } t < \a \end{cases}$
+
+\vspace{.5cm}
+
+$\displaystyle \lim_{t \rightarrow \a^+} \frac{\ifthenelse{\ktop=1}{\k}{}\ifthenelse{\abstop=1}{|\a-t|}{(\a-t)}}{\ifthenelse{\ktop=0}{\k}{}\ifthenelse{\abstop=0}{|\a-t|}{(\a-t)}}$
+endquestion
+
+startsolution
+\item $\begin{cases} -(\a -t) & \text{ when } t \geq \a \\ \a-t & \text{ when } t < \a \end{cases}$, $\ifthenelse{\ktop=1}{-\k}{-\frac{1}{\k}}$
+endsolution
+endall
+
+
+
+
+startall
+startcomments 
+Learning goal 13
+endcomments
+
+startquestion Complete the piecewise function, and use that to evaluate the given limit.
+
+\vspace{.5cm}
+
+$|\a - t| = \begin{cases} \hspace{1cm} & \text{ when } t \geq \a \\ & \\ \hspace{1cm} & \text{ when } t < \a \end{cases}$
+
+\vspace{.5cm}
+
+$\displaystyle \lim_{t \rightarrow \a^+} \frac{\ifthenelse{\ktop=1}{\k}{}\ifthenelse{\abstop=1}{|\a-t|}{(t-\a)}}{\ifthenelse{\ktop=0}{\k}{}\ifthenelse{\abstop=0}{|\a-t|}{(t-\a)}}$
+endquestion
+
+startsolution
+\item $\begin{cases} -(\a -t) & \text{ when } t \geq \a \\ \a-t & \text{ when } t < \a \end{cases}$, $\ifthenelse{\ktop=1}{\k}{\frac{1}{\k}}$
+endsolution
+endall
+
+
+
+
+startall
+startcomments 
+Learning goal 13
+endcomments
+
+startquestion Complete the piecewise function, and use that to evaluate the given limit.
+
+\vspace{.5cm}
+
+$|t- \a| = \begin{cases} \hspace{1cm} & \text{ when } t \geq \a \\ & \\ \hspace{1cm} & \text{ when } t < \a \end{cases}$
+
+\vspace{.5cm}
+
+$\displaystyle \lim_{t \rightarrow \a^-} \frac{\ifthenelse{\ktop=1}{\k}{}\ifthenelse{\abstop=1}{|t-\a|}{(\a-t)}}{\ifthenelse{\ktop=0}{\k}{}\ifthenelse{\abstop=0}{|t-\a|}{(\a-t)}}$
+endquestion
+
+startsolution
+\item $\begin{cases} t-\a & \text{ when } t \geq \a \\ -(t- \a) & \text{ when } t < \a \end{cases}$, $\ifthenelse{\ktop=1}{\k}{\frac{1}{\k}}$
+endsolution
+endall
+
+
+
+startall
+startcomments 
+Learning goal 13
+endcomments
+
+startquestion Complete the piecewise function, and use that to evaluate the given limit.
+
+\vspace{.5cm}
+
+$|t- \a| = \begin{cases} \hspace{1cm} & \text{ when } t \geq \a \\ & \\ \hspace{1cm} & \text{ when } t < \a \end{cases}$
+
+\vspace{.5cm}
+
+$\displaystyle \lim_{t \rightarrow \a^-} \frac{\ifthenelse{\ktop=1}{\k}{}\ifthenelse{\abstop=1}{|t-\a|}{(t-\a)}}{\ifthenelse{\ktop=0}{\k}{}\ifthenelse{\abstop=0}{|t-\a|}{(t-\a)}}$
+endquestion
+
+startsolution
+\item $\begin{cases} t-\a & \text{ when } t \geq \a \\ -(t- \a) & \text{ when } t < \a \end{cases}$, $\ifthenelse{\ktop=1}{-\k}{-\frac{1}{\k}}$
+endsolution
+endall
+
+
+
+
+
+

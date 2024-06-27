@@ -1,0 +1,41 @@
+startdef a = random.choice([-6,-4,-2,2,4,6]) enddef % a forced to be even to avoid a zero determinant
+startdef b = random.choice([3,5,7,9]) enddef %c and b forced to be odd
+startdef c = random.choice([-7,-5,-3,-1]) enddef 
+startdef d = np.random.randint(1,5) enddef
+
+startdef negb = -1*b enddef
+startdef negc = -1*c enddef
+startdef determ = a*d-b*c enddef
+startdef ansa = simplify_fraction(d,determ) enddef
+startdef ansb = simplify_fraction(-b,determ) enddef
+startdef ansc = simplify_fraction(-c,determ) enddef
+startdef ansd = simplify_fraction(a,determ) enddef
+
+
+startpre \item {\bf (4 points)} endpre
+
+startpost
+\vfill 
+endpost
+
+
+
+startall
+startcomments 
+Matrix inverse
+endcomments
+
+startquestion What is the inverse of $\left[ \begin{array}{cc}
+\a & \b \\
+\c & \d \\ \end{array} \right]$?
+endquestion
+
+startsolution
+\item $\dfrac{1}{\determ} \left[ \begin{array}{cc}
+\d & \negb \\
+\negc & \a \\ \end{array} \right] = 
+\left[ \begin{array}{cc}
+\ansa & \ansb \\
+\ansc & \ansd \\ \end{array} \right]$
+endsolution
+endall

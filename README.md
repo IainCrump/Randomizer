@@ -1,8 +1,6 @@
-## Instructions:
-* Create a folder for the assessment.
-* Create questions using the the question guide.
-* Save the question files in your folder.
-* Edit the exam and solution preface.
-* Add a CSV file if needed.
-* Edit the randomizer for the exam.
-* Run the program on jupyter notebook.
+## Installation Instructions:
+*Download and install Python with Jupyter (we recommend Anaconda: https://www.anaconda.com/download)
+*Download the Randomizer zip file here.
+*Unzip the Randomizer file into the Python (or Anaconda) folder.
+*See (ArXiv link) for a detailed instruction guide on using the randomizer.
+

@@ -1,6 +1,7 @@
 ## Installation Instructions:
 
 * Download and install Python with Jupyter (we recommend Anaconda: https://www.anaconda.com/download)
+* Download and install a LaTeX compiler.
 * Download the Randomizer zip file here.
 * Unzip the Randomizer file into the Python (or Anaconda) folder.
 * To open the randomizer, open Anaconda and select Jupyter Notebook. Navigate your folders to the Randomizer folder.
